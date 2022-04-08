@@ -14,7 +14,7 @@ export const Nav = () => {
 
   const logout = async () => {
     try {
-      mutateUser(await fetchApi("/api/logout"));
+      mutateUser(await fetchApi("/api/auth/logout"));
     } catch (e) {
       console.error(e);
     }

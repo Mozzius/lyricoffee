@@ -24,7 +24,7 @@ const Login: NextPage = () => {
 
           try {
             mutateUser(
-              await fetchApi("/api/login", {
+              await fetchApi("/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ login: email, password }),
