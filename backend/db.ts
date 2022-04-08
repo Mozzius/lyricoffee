@@ -1,6 +1,5 @@
 import postgres from "postgres";
 
-import initialise from "./initialise";
 import type { UserDetailsBE } from "types";
 
 import hash from "utils/hash";
@@ -11,9 +10,24 @@ const sql = postgres(process.env.DB_CONNECTION_STRING!, {
 
 export type SQL = typeof sql;
 
-// top level await would be nice!
-// unfortunately broken in this version of Next.js
-if (process.env.NODE_ENV === "development") initialise(sql);
+export const makeSureUserTableExists = async () => {
+  await sql`
+    CREATE TABLE IF NOTE EXISTS users (
+      id SERIAL PRIMARY KEY,
+      login VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      name VARCHAR(255) NOT NULL
+    )
+  `;
+  await sql`
+    INSERT INTO users ${sql({
+      login: "admin",
+      password: hash("admin"),
+      name: "Mr Admin",
+    })}
+    ON CONFLICT DO NOTHING
+  `;
+};
 
 export const getUserWithLoginAndPassword = async (
   login: string,
@@ -22,11 +36,13 @@ export const getUserWithLoginAndPassword = async (
   const hashedPwd = hash(password);
   const query = await sql<UserDetailsBE[]>`
     SELECT * FROM users 
-    WHERE login = ${login} AND password = ${hashedPwd}
+    WHERE login = ${login}
   `;
 
   if (query.length === 0)
-    throw new Error("Could not find user with those details");
+    throw new Error("Could not find user with that login");
+
+  if (query[0].password !== hashedPwd) throw new Error("Password is incorrect");
 
   return query[0];
 };

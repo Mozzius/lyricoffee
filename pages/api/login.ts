@@ -3,7 +3,10 @@ import { sessionOptions } from "utils/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import type { User } from "types";
-import { getUserWithLoginAndPassword } from "backend/db";
+import {
+  getUserWithLoginAndPassword,
+  makeSureUserTableExists,
+} from "backend/db";
 
 export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
@@ -11,6 +14,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { login, password } = req.body;
 
   try {
+    await makeSureUserTableExists();
+
     // discard password!
     const { password: _, ...details } = await getUserWithLoginAndPassword(
       login,
