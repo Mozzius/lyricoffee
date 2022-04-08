@@ -23,7 +23,7 @@ export const Nav = () => {
   return (
     <nav className={classes.nav}>
       <div className={classes.inner}>
-        <p>Codesigned Next.js Template</p>
+        <p>Lyricoffee!</p>
         <div className={classes.grow} />
         {user &&
           (user.isLoggedIn ? (
