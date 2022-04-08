@@ -14,9 +14,7 @@ export const Layout = ({ title, className, children }: Props) => {
   return (
     <div className={classes.container}>
       <Head>
-        <title>
-          {title ? `${title} | Nextjs Template` : "Nextjs Template"}
-        </title>
+        <title>{title ? `${title} | Lyricoffee` : "Lyricoffee"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
