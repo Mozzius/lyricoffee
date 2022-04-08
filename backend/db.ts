@@ -12,7 +12,7 @@ export type SQL = typeof sql;
 
 export const makeSureUserTableExists = async () => {
   await sql`
-    CREATE TABLE IF NOTE EXISTS users (
+    CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       login VARCHAR(255) NOT NULL,
       password VARCHAR(255) NOT NULL,
