@@ -19,6 +19,7 @@ export const makeSureUserTableExists = async () => {
       name VARCHAR(255) NOT NULL
     )
   `;
+  
   await sql`
     INSERT INTO users ${sql({
       login: "admin",

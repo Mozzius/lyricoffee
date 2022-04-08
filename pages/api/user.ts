@@ -18,10 +18,12 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {
 
       if (query.length === 0) throw new Error("Could not find user");
 
-      if (!isEqual(query[0], user.details)) {
+      const { password: _, ...details } = query[0];
+
+      if (!isEqual(details, user.details)) {
         user = {
           isLoggedIn: true,
-          details: query[0],
+          details: details,
         };
         req.session.user = user;
         req.session.save();
