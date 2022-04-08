@@ -43,13 +43,13 @@ const Login: NextPage = () => {
         <h1>Log in</h1>
         <input
           type="text"
-          placeholder="Username (default is 'admin')"
+          placeholder="Username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
-          placeholder="Password (default is 'admin')"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

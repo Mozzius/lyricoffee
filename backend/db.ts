@@ -5,7 +5,9 @@ import type { UserDetailsBE } from "types";
 
 import hash from "utils/hash";
 
-const sql = postgres(process.env.DB_CONNECTION_STRING!);
+const sql = postgres(process.env.DB_CONNECTION_STRING!, {
+  connect_timeout: 10,
+});
 
 export type SQL = typeof sql;
 
