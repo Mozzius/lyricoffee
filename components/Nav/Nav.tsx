@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import fetchApi from "utils/fetchApi";
 
@@ -23,7 +24,7 @@ export const Nav = () => {
   return (
     <nav className={classes.nav}>
       <div className={classes.inner}>
-        <p>Lyricoffee!</p>
+        <Link href="/">Lyricoffee!</Link>
         <div className={classes.grow} />
         {user &&
           (user.isLoggedIn ? (

@@ -1,10 +1,10 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import { sessionOptions } from "utils/session";
 import { NextApiRequest, NextApiResponse } from "next";
+import isEqual from "lodash/isEqual";
 
 import type { User, UserDetailsBE } from "types";
 import sql from "backend/db";
-import isEqual from "lodash/isEqual";
+import { sessionOptions } from "utils/session";
 
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 

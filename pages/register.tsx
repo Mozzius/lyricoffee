@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Layout } from "components";
 import fetchApi, { FetchError } from "utils/fetchApi";
 import useAuth from "utils/useAuth";
-import classes from "styles/Auth.module.scss";
+import classes from "styles/Forms.module.scss";
 
 const Register: NextPage = () => {
   const [email, setEmail] = useState("");

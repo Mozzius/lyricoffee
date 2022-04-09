@@ -16,17 +16,52 @@ export const makeSureUserTableExists = async () => {
       id SERIAL PRIMARY KEY,
       login VARCHAR(255) NOT NULL,
       password VARCHAR(255) NOT NULL,
-      name VARCHAR(255) NOT NULL
+      name VARCHAR(255) NOT NULL,
+      admin BOOLEAN NOT NULL DEFAULT FALSE,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
     )
   `;
-  
+
   await sql`
     INSERT INTO users ${sql({
-      login: "admin",
+      login: "mozzius",
       password: hash("admin"),
-      name: "Mr Admin",
+      name: "Samuel",
+      admin: true,
     })}
     ON CONFLICT DO NOTHING
+  `;
+};
+
+export const makeSureCollectionTableExists = async () => {
+  await makeSureUserTableExists();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS collections (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      description TEXT,
+      user_id INTEGER REFERENCES users(id) NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
+  `;
+};
+
+export const makeSureSongTableExists = async () => {
+  await makeSureCollectionTableExists();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS songs (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      artist VARCHAR(255) NOT NULL,
+      album VARCHAR(255) NOT NULL,
+      lyrics TEXT NOT NULL,
+      collection_id INTEGER REFERENCES collections(id) NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
   `;
 };
 
